@@ -6,7 +6,7 @@ resource "aws_lambda_function" "lambda_processor" {
   handler       = "lambda_function.handler"
   runtime       = "python2.7"
   source_code_hash = data.archive_file.lambda_processor_zip.output_base64sha256
-  timeout       = 60
+  timeout       = 180
 }
 
 resource "aws_iam_role" "lambda_iam" {
