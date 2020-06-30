@@ -52,13 +52,14 @@ import StringIO
 import boto3
 import logging
 import os
+from datetime import datetime
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(os.getenv("LOG_LEVEL", "INFO"))
 
 
-def transformLogEvent(log_event):
+def transform(data):
     """Transform each log event.
 
     The default implementation below just extracts the message and appends a newline to it.
@@ -69,21 +70,25 @@ def transformLogEvent(log_event):
     Returns:
     str: The transformed log event.
     """
-    return log_event['message'].replate('\n', '').replace('\t', '   ')
+    now = datetime.utcnow().isoformat()
+    source = {
+        'timestamp': now,
+        'logEvents': data['logEvents'],
+        'logStream': data['logStream']
+    }
+
+    bulkRequestBody = json.dumps(source) + '\n'
+    return bulkRequestBody
 
 
 def processRecords(records):
-    for r in records:
-        logger.info("r: {}".format(r))
-        data = base64.b64decode(r['data'])
+    for record in records:
+        data = base64.b64decode(record['data'])
         striodata = StringIO.StringIO(data)
-        logger.info("striodata: {}".format(striodata))
         with gzip.GzipFile(fileobj=striodata, mode='r') as f:
             data = json.loads(f.read())
-            logger.info("data: {}".format(data))
 
-        recId = r['recordId']
-        logger.info("recId: {}".format(recId))
+        recId = record['recordId']
         """
         CONTROL_MESSAGE are sent by CWL to check if the subscription is reachable.
         They do not contain actual data.
@@ -94,10 +99,8 @@ def processRecords(records):
                 'recordId': recId
             }
         elif data['messageType'] == 'DATA_MESSAGE':
-            raw_data = ''.join([transformLogEvent(e) for e in data['logEvents']])
-            logger.info("data: {}".format(data))
+            data = transform(data)
             data = base64.b64encode(data)
-            logger.info("data encoded: {}".format(data))
             yield {
                 'data': data,
                 'result': 'Ok',
@@ -152,20 +155,13 @@ def getReingestionRecord(reIngestionRecord):
 
 
 def handler(event, context):
-    logger.info("event: {}".format(event))
     isSas = 'sourceKinesisStreamArn' in event
-    logger.info("isSas: {}".format(isSas))
     streamARN = event['deliveryStreamArn']
-    logger.info("streamARN: {}".format(streamARN))
     region = streamARN.split(':')[3]
-    logger.info("region: {}".format(region))
     streamName = streamARN.split('/')[1]
-    logger.info("streamName: {}".format(streamName))
     records = list(processRecords(event['records']))
-    logger.info("records: {}".format(records))
     projectedSize = 0
     dataByRecordId = {rec['recordId']: createReingestionRecord(rec) for rec in event['records']}
-    logger.info("dataByRecordId: {}".format(dataByRecordId))
     putRecordBatches = []
     recordsToReingest = []
     totalRecordsToBeReingested = 0
