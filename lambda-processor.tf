@@ -1,10 +1,10 @@
 resource "aws_lambda_function" "lambda_processor" {
-  filename         = "firehose_lambda_processor.zip"
+  filename         = "${var.firehose_lambda_processor_name}.zip"
   function_name    = var.firehose_lambda_processor_name
   role             = aws_iam_role.lambda_iam.arn
   description      = "An Amazon Kinesis Firehose stream processor that extracts individual log events from records sent by Cloudwatch Logs subscription filters."
   handler          = "lambda_function.handler"
-  runtime          = "python2.7"
+  runtime          = "python3.8"
   source_code_hash = data.archive_file.lambda_processor_zip.output_base64sha256
   timeout          = 180
   depends_on       = [aws_iam_role_policy_attachment.lambda_logs, aws_cloudwatch_log_group.example]

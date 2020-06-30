@@ -48,15 +48,18 @@ The code below will:
 import base64
 import json
 import gzip
-import StringIO
 import boto3
 import logging
 import os
 from datetime import datetime
 
+STATUS_OK: str = 'Ok'
+DROPPED: str = 'Dropped'
+FAILED: str = 'ProcessingFailed'
+
 logging.basicConfig()
 logger = logging.getLogger(__name__)
-logger.setLevel(os.getenv("LOG_LEVEL", "INFO"))
+logger.setLevel(os.getenv('LOG_LEVEL', 'INFO'))
 
 
 def transform(data):
@@ -83,10 +86,7 @@ def transform(data):
 
 def processRecords(records):
     for record in records:
-        data = base64.b64decode(record['data'])
-        striodata = StringIO.StringIO(data)
-        with gzip.GzipFile(fileobj=striodata, mode='r') as f:
-            data = json.loads(f.read())
+        data = json.loads(gzip.decompress(base64.b64decode(record['data'])))
 
         recId = record['recordId']
         """
@@ -95,20 +95,20 @@ def processRecords(records):
         """
         if data['messageType'] == 'CONTROL_MESSAGE':
             yield {
-                'result': 'Dropped',
+                'result': DROPPED,
                 'recordId': recId
             }
         elif data['messageType'] == 'DATA_MESSAGE':
             data = transform(data)
-            data = base64.b64encode(data)
+            data = base64.b64encode(data.encode('UTF-8')).decode('UTF-8')
             yield {
                 'data': data,
-                'result': 'Ok',
+                'result': STATUS_OK,
                 'recordId': recId
             }
         else:
             yield {
-                'result': 'ProcessingFailed',
+                'result': FAILED,
                 'recordId': recId
             }
 
@@ -155,6 +155,7 @@ def getReingestionRecord(reIngestionRecord):
 
 
 def handler(event, context):
+    logger.info(json.dumps(event))
     isSas = 'sourceKinesisStreamArn' in event
     streamARN = event['deliveryStreamArn']
     region = streamARN.split(':')[3]
@@ -167,7 +168,7 @@ def handler(event, context):
     totalRecordsToBeReingested = 0
 
     for idx, rec in enumerate(records):
-        if rec['result'] != 'Ok':
+        if rec['result'] != STATUS_OK:
             continue
         projectedSize += len(rec['data']) + len(rec['recordId'])
         # 6000000 instead of 6291456 to leave ample headroom for the stuff we didn't account for
@@ -176,7 +177,7 @@ def handler(event, context):
             recordsToReingest.append(
                 getReingestionRecord(dataByRecordId[rec['recordId']])
             )
-            records[idx]['result'] = 'Dropped'
+            records[idx]['result'] = DROPPED
             del(records[idx]['data'])
 
         # split out the record batches into multiple groups, 500 records at max per group
@@ -199,4 +200,4 @@ def handler(event, context):
     else:
         print('No records to be reingested')
 
-    return {"records": records}
+    return {'records': records}

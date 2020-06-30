@@ -17,9 +17,11 @@ resource "aws_kinesis_firehose_delivery_stream" "test_stream" {
   }
 
   elasticsearch_configuration {
-    domain_arn = aws_elasticsearch_domain.es.arn
-    role_arn   = aws_iam_role.firehose_role.arn
-    index_name = "kinesis"
+    domain_arn         = aws_elasticsearch_domain.es.arn
+    role_arn           = aws_iam_role.firehose_role.arn
+    index_name         = "kinesis"
+    buffering_interval = 60
+    retry_duration     = 60
 
     cloudwatch_logging_options {
       enabled         = true
