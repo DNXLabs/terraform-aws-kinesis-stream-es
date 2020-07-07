@@ -1,9 +1,19 @@
+resource "aws_iam_service_linked_role" "es" {
+  aws_service_name = "es.amazonaws.com"
+}
+
 resource "aws_elasticsearch_domain" "es" {
   domain_name           = var.elasticsearch_domain_name
   elasticsearch_version = "7.4"
 
   cluster_config {
-    instance_type = "r5.large.elasticsearch"
+    instance_type          = "r5.large.elasticsearch"
+    instance_count         = 3
+    zone_awareness_enabled = true
+
+    zone_awareness_config {
+      availability_zone_count = 3
+    }
   }
 
   ebs_options {
@@ -11,9 +21,37 @@ resource "aws_elasticsearch_domain" "es" {
     volume_size  = 10
   }
 
+  encrypt_at_rest {
+    enabled = true
+  }
+
+  node_to_node_encryption {
+    enabled = true
+  }
+
+  domain_endpoint_options {
+    enforce_https       = false
+    tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
+  }
+
+  advanced_security_options {
+    enabled                        = false
+    # internal_user_database_enabled = false
+
+    # master_user_options {
+      # master_user_arn =
+      # master_user_name     = "admin"
+      # master_user_password = "Adminadmin@999"
+    # }
+  }
+
   tags = {
-    Domain = "TestCloudWatch",
-    POC = "BrighteStream"
+    Domain = var.elasticsearch_domain_name
+  }
+
+  vpc_options {
+    subnet_ids = var.private_subnet_ids
+    security_group_ids = [aws_security_group.es_sec_grp.id]
   }
 
   access_policies = jsonencode({
@@ -27,4 +65,6 @@ resource "aws_elasticsearch_domain" "es" {
       }
     ]
   })
+
+  depends_on = [aws_iam_service_linked_role.es]
 }

@@ -1,7 +1,4 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket = var.bucket_name
+  bucket = var.kinesis_stream_bucket_name
   acl    = "private"
-  tags = {
-    POC = "BrighteStream"
-  }
 }
