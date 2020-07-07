@@ -6,7 +6,7 @@
 ## Usage
 ```terraform
 module "cloudwatch_stream_es" {
-    source = "./terraform-aws-cloudwatch-stream-es"
+    source = "git::https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es.git"
 
     vpc_id                     = ""
     private_subnet_ids         = ""
