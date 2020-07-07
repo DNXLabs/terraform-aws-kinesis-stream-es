@@ -52,13 +52,15 @@ data delivery to Amazon ES.
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.20 |
+| archive | ~> 1.3 |
+| aws | ~> 2.69 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| archive | n/a |
-| aws | n/a |
+| archive | ~> 1.3 |
+| aws | ~> 2.69 |
 
 ## Inputs
 
