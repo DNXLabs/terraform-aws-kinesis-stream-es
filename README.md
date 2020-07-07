@@ -64,13 +64,13 @@ data delivery to Amazon ES.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| elasticsearch\_domain\_name | n/a | `any` | n/a | yes |
+| elasticsearch\_domain\_name | n/a | `string` | n/a | yes |
 | elasticsearch\_volume\_size | n/a | `number` | `10` | no |
 | elasticsearch\_volume\_type | n/a | `string` | `"gp2"` | no |
 | firehose\_lambda\_processor\_name | n/a | `string` | `"firehose_lambda_processor"` | no |
-| kinesis\_stream\_bucket\_name | n/a | `any` | n/a | yes |
+| kinesis\_stream\_bucket\_name | n/a | `string` | n/a | yes |
 | private\_subnet\_ids | n/a | `list` | n/a | yes |
-| vpc\_id | n/a | `any` | n/a | yes |
+| vpc\_id | n/a | `string` | n/a | yes |
 
 ## Outputs
 
