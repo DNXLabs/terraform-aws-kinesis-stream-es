@@ -1,5 +1,7 @@
 # terraform-aws-cloudwatch-stream-es
 
+[![Lint Status](https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es/actions)
+[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-cloudwatch-stream-es)](https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es/blob/master/LICENSE)
 
 ## Usage
 ```terraform
@@ -16,8 +18,8 @@ module "cloudwatch_stream_es" {
 ```
 
 When you enable Kinesis Data Firehose data transformation, Kinesis Data Firehose buffers incoming
-data up to 3 MB by default. (To adjust the buffering size, use the ProcessingConfiguration API
-with the ProcessorParameter called BufferSizeInMBs.) Kinesis Data Firehose then invokes the
+data up to 3 MB by default. `(To adjust the buffering size, use the ProcessingConfiguration API
+with the ProcessorParameter called BufferSizeInMBs.)` Kinesis Data Firehose then invokes the
 specified Lambda function asynchronously with each buffered batch using the AWS Lambda synchronous
 invocation mode. The transformed data is sent from Lambda to Kinesis Data Firehose. Kinesis Data
 Firehose then sends it to the destination when the specified destination buffering size or buffering
@@ -43,6 +45,10 @@ incoming data before delivering it to Amazon ES. You can configure the values fo
 Buffer size (1–100 MB) or Buffer interval (60–900 seconds), and the condition satisfied first triggers
 data delivery to Amazon ES.
 
+<!--- BEGIN_TF_DOCS --->
+
+
+<!--- END_TF_DOCS --->
 
 ## Authors
 
