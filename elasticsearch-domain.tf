@@ -18,7 +18,7 @@ resource "aws_elasticsearch_domain" "es" {
 
   ebs_options {
     ebs_enabled = true
-    volume_size  = 10
+    volume_size = 10
   }
 
   encrypt_at_rest {
@@ -35,7 +35,7 @@ resource "aws_elasticsearch_domain" "es" {
   }
 
   advanced_security_options {
-    enabled                        = false
+    enabled = false
     # internal_user_database_enabled = false
 
     # master_user_options {
@@ -50,7 +50,7 @@ resource "aws_elasticsearch_domain" "es" {
   }
 
   vpc_options {
-    subnet_ids = var.private_subnet_ids
+    subnet_ids         = var.private_subnet_ids
     security_group_ids = [aws_security_group.es_sec_grp.id]
   }
 

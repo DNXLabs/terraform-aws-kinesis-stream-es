@@ -1,5 +1,5 @@
 variable "elasticsearch_domain_name" {
-  type    = string
+  type = string
 }
 
 variable "elasticsearch_volume_type" {
@@ -26,9 +26,9 @@ variable "firehose_lambda_processor_name" {
 # }
 
 variable "kinesis_stream_bucket_name" {
-  type    = string
+  type = string
 }
 
 variable "vpc_id" {
-  type    = string
+  type = string
 }
