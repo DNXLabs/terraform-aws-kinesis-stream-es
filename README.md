@@ -47,6 +47,34 @@ data delivery to Amazon ES.
 
 <!--- BEGIN_TF_DOCS --->
 
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12.20 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| archive | n/a |
+| aws | n/a |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| elasticsearch\_domain\_name | n/a | `any` | n/a | yes |
+| elasticsearch\_volume\_size | n/a | `number` | `10` | no |
+| elasticsearch\_volume\_type | n/a | `string` | `"gp2"` | no |
+| firehose\_lambda\_processor\_name | n/a | `string` | `"firehose_lambda_processor"` | no |
+| kinesis\_stream\_bucket\_name | n/a | `any` | n/a | yes |
+| private\_subnet\_ids | n/a | `list` | n/a | yes |
+| vpc\_id | n/a | `any` | n/a | yes |
+
+## Outputs
+
+No output.
 
 <!--- END_TF_DOCS --->
 
