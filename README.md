@@ -1,6 +1,20 @@
 # terraform-aws-cloudwatch-stream-es
 
 
+## Usage
+```terraform
+module "cloudwatch_stream_es" {
+    source = "./terraform-aws-cloudwatch-stream-es"
+
+    vpc_id                     = ""
+    private_subnet_ids         = ""
+    elasticsearch_domain_name  = ""
+    elasticsearch_volume_type  = ""
+    elasticsearch_volume_size  = ""
+    kinesis_stream_bucket_name = ""
+}
+```
+
 When you enable Kinesis Data Firehose data transformation, Kinesis Data Firehose buffers incoming
 data up to 3 MB by default. (To adjust the buffering size, use the ProcessingConfiguration API
 with the ProcessorParameter called BufferSizeInMBs.) Kinesis Data Firehose then invokes the
