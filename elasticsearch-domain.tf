@@ -1,8 +1,12 @@
 resource "aws_iam_service_linked_role" "es" {
+  count = var.create_elasticsearch_domain ? 1 : 0
+
   aws_service_name = "es.amazonaws.com"
 }
 
 resource "aws_elasticsearch_domain" "es" {
+  count = var.create_elasticsearch_domain ? 1 : 0
+
   domain_name           = var.elasticsearch_domain_name
   elasticsearch_version = "7.4"
 

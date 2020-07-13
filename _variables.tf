@@ -1,3 +1,13 @@
+variable "aws_region" {
+  description = "The AWS region to deploy into (e.g. ap-southeast-2)."
+  default     = "ap-southeast-2"
+}
+
+variable "create_elasticsearch_domain" {
+  description = "If true, will create aws elasticsearch_domain"
+  default     = "false"
+}
+
 variable "elasticsearch_domain_name" {
   type = string
 }
