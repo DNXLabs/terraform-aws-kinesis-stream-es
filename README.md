@@ -1,12 +1,12 @@
-# terraform-aws-cloudwatch-stream-es
+# terraform-aws-kinesis-stream-es
 
-[![Lint Status](https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es/actions)
-[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-cloudwatch-stream-es)](https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es/blob/master/LICENSE)
+[![Lint Status](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/actions)
+[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-kinesis-stream-es)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/blob/master/LICENSE)
 
 ## Usage
 ```terraform
-module "cloudwatch_stream_es" {
-    source = "git::https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es.git"
+module "kinesis_stream_es" {
+    source = "git::https://github.com/DNXLabs/terraform-aws-kinesis-stream-es.git"
 
     vpc_id                      = ""
     private_subnet_ids          = ""
@@ -90,4 +90,4 @@ Module managed by [DNX Solutions](https://github.com/DNXLabs).
 
 ## License
 
-Apache 2 Licensed. See [LICENSE](https://github.com/DNXLabs/terraform-aws-ecs/blob/master/LICENSE) for full details.
+Apache 2 Licensed. See [LICENSE](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/blob/master/LICENSE) for full details.
