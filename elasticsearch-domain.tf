@@ -40,13 +40,6 @@ resource "aws_elasticsearch_domain" "es" {
 
   advanced_security_options {
     enabled = false
-    # internal_user_database_enabled = false
-
-    # master_user_options {
-      # master_user_arn =
-      # master_user_name     = "admin"
-      # master_user_password = "Adminadmin@999"
-    # }
   }
 
   tags = {
@@ -59,13 +52,13 @@ resource "aws_elasticsearch_domain" "es" {
   }
 
   access_policies = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Action": "es:*",
-        "Principal": "*",
-        "Effect": "Allow",
-        "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
+        "Action" : "es:*",
+        "Principal" : "*",
+        "Effect" : "Allow",
+        "Resource" : "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
       }
     ]
   })

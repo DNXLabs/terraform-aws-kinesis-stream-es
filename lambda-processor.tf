@@ -18,16 +18,16 @@ resource "aws_iam_role" "lambda_iam" {
   name = "lambda_iam"
 
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-          "Action": "sts:AssumeRole",
-          "Principal": {
-              "Service": "lambda.amazonaws.com"
-          },
-          "Effect": "Allow",
-          "Sid": ""
-        }
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : "sts:AssumeRole",
+        "Principal" : {
+          "Service" : "lambda.amazonaws.com"
+        },
+        "Effect" : "Allow",
+        "Sid" : ""
+      }
     ]
   })
 }
@@ -43,16 +43,16 @@ resource "aws_iam_policy" "lambda_processor_logging" {
   description = "IAM policy for logging from a lambda"
 
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Action": [
+        "Action" : [
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
-        "Resource": "arn:aws:logs:*:*:*",
-        "Effect": "Allow"
+        "Resource" : "arn:aws:logs:*:*:*",
+        "Effect" : "Allow"
       }
     ]
   })
