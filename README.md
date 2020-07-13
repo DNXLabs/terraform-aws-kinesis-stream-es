@@ -66,6 +66,8 @@ data delivery to Amazon ES.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| aws\_region | The AWS region to deploy into (e.g. ap-southeast-2). | `string` | `"ap-southeast-2"` | no |
+| create\_elasticsearch\_domain | If true, will create aws elasticsearch\_domain | `string` | `"false"` | no |
 | elasticsearch\_domain\_name | n/a | `string` | n/a | yes |
 | elasticsearch\_volume\_size | n/a | `number` | `10` | no |
 | elasticsearch\_volume\_type | n/a | `string` | `"gp2"` | no |
