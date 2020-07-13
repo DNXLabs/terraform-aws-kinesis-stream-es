@@ -8,12 +8,13 @@
 module "cloudwatch_stream_es" {
     source = "git::https://github.com/DNXLabs/terraform-aws-cloudwatch-stream-es.git"
 
-    vpc_id                     = ""
-    private_subnet_ids         = ""
-    elasticsearch_domain_name  = ""
-    elasticsearch_volume_type  = ""
-    elasticsearch_volume_size  = ""
-    kinesis_stream_bucket_name = ""
+    vpc_id                      = ""
+    private_subnet_ids          = ""
+    create_elasticsearch_domain = ""
+    elasticsearch_domain_name   = ""
+    elasticsearch_volume_type   = ""
+    elasticsearch_volume_size   = ""
+    kinesis_stream_bucket_name  = ""
 }
 ```
 
