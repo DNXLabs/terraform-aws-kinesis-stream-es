@@ -63,8 +63,8 @@
 #           "es:ESHttpPut"
 #         ],
 #         "Resource": [
-#           "${aws_elasticsearch_domain.es.arn}",
-#           "${aws_elasticsearch_domain.es.arn}/*"
+#           "${aws_elasticsearch_domain.es[0].arn}",
+#           "${aws_elasticsearch_domain.es[0].arn}/*"
 #         ]
 #       },
 #       {
@@ -73,14 +73,14 @@
 #           "es:ESHttpGet"
 #         ],
 #         "Resource": [
-#           "${aws_elasticsearch_domain.es.arn}/_all/_settings",
-#           "${aws_elasticsearch_domain.es.arn}/_cluster/stats",
-#           "${aws_elasticsearch_domain.es.arn}/${var.kinesis_firehose_index_name}*/_mapping/*",
-#           "${aws_elasticsearch_domain.es.arn}/_nodes",
-#           "${aws_elasticsearch_domain.es.arn}/_nodes/stats",
-#           "${aws_elasticsearch_domain.es.arn}/_nodes/*/stats",
-#           "${aws_elasticsearch_domain.es.arn}/_stats",
-#           "${aws_elasticsearch_domain.es.arn}/${var.kinesis_firehose_index_name}*/_stats"
+#           "${aws_elasticsearch_domain.es[0].arn}/_all/_settings",
+#           "${aws_elasticsearch_domain.es[0].arn}/_cluster/stats",
+#           "${aws_elasticsearch_domain.es[0].arn}/${var.kinesis_firehose_index_name}*/_mapping/*",
+#           "${aws_elasticsearch_domain.es[0].arn}/_nodes",
+#           "${aws_elasticsearch_domain.es[0].arn}/_nodes/stats",
+#           "${aws_elasticsearch_domain.es[0].arn}/_nodes/*/stats",
+#           "${aws_elasticsearch_domain.es[0].arn}/_stats",
+#           "${aws_elasticsearch_domain.es[0].arn}/${var.kinesis_firehose_index_name}*/_stats"
 #         ]
 #       },
 #       {

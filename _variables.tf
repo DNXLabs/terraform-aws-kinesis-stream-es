@@ -4,7 +4,7 @@ variable "aws_region" {
 }
 
 variable "create_elasticsearch_domain" {
-  description = "If true, will create aws elasticsearch_domain"
+  description = "If true, will create aws elasticsearch domain."
   default     = "false"
 }
 
@@ -31,9 +31,9 @@ variable "firehose_lambda_processor_name" {
   type    = string
 }
 
-# variable "kinesis_firehose_index_name" {
-#   default = "kinesis"
-# }
+variable "kinesis_firehose_index_name" {
+  default = "kinesis"
+}
 
 variable "kinesis_stream_bucket_name" {
   type = string

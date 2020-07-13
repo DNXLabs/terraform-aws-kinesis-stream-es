@@ -22,11 +22,17 @@
 #   }
 
 #   elasticsearch_configuration {
-#     domain_arn         = aws_elasticsearch_domain.es.arn
+#     domain_arn         = aws_elasticsearch_domain.es[0].arn
 #     role_arn           = aws_iam_role.firehose_role.arn
 #     index_name         = var.kinesis_firehose_index_name
 #     buffering_interval = 60
 #     retry_duration     = 60
+
+#     vpc_config {
+#       role_arn           = aws_iam_role.firehose_role.arn
+#       security_group_ids = [aws_security_group.es_sec_grp.id]
+#       subnet_ids         = var.private_subnet_ids
+#     }
 
 #     cloudwatch_logging_options {
 #       enabled         = true
