@@ -1,22 +1,22 @@
 resource "aws_iam_service_linked_role" "es" {
-  count = var.create_elasticsearch_domain ? 1 : 0
+  count = var.create_elasticsearch ? 1 : 0
 
   aws_service_name = "es.amazonaws.com"
 }
 
 resource "aws_elasticsearch_domain" "es" {
-  count = var.create_elasticsearch_domain ? 1 : 0
+  count = var.create_elasticsearch ? 1 : 0
 
-  domain_name           = var.elasticsearch_domain_name
-  elasticsearch_version = "7.4"
+  domain_name           = var.elasticsearch_name
+  elasticsearch_version = var.elasticsearch_version
 
   cluster_config {
-    instance_type          = "r5.large.elasticsearch"
-    instance_count         = 3
+    instance_type          = var.elasticsearch_instance_type
+    instance_count         = var.elasticsearch_instance_count
     zone_awareness_enabled = true
 
     zone_awareness_config {
-      availability_zone_count = 3
+      availability_zone_count = var.elasticsearch_availability_zone_count
     }
   }
 
@@ -26,11 +26,11 @@ resource "aws_elasticsearch_domain" "es" {
   }
 
   encrypt_at_rest {
-    enabled = true
+    enabled = var.elasticsearch_encrypt_at_rest
   }
 
   node_to_node_encryption {
-    enabled = true
+    enabled = var.elasticsearch_node_to_node_encryption
   }
 
   domain_endpoint_options {
@@ -43,7 +43,7 @@ resource "aws_elasticsearch_domain" "es" {
   }
 
   tags = {
-    Domain = var.elasticsearch_domain_name
+    Domain = var.elasticsearch_name
   }
 
   vpc_options {
@@ -58,7 +58,7 @@ resource "aws_elasticsearch_domain" "es" {
         "Action" : "es:*",
         "Principal" : "*",
         "Effect" : "Allow",
-        "Resource" : "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
+        "Resource" : "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_name}/*"
       }
     ]
   })
