@@ -67,10 +67,18 @@ data delivery to Amazon ES.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| create\_elasticsearch\_domain | If true, will create aws elasticsearch domain. | `string` | `"false"` | no |
-| elasticsearch\_domain\_name | n/a | `string` | n/a | yes |
+| aws\_region | The AWS region to deploy into (e.g. ap-southeast-2). | `string` | `"ap-southeast-2"` | no |
+| create\_elasticsearch | If true, will create aws elasticsearch domain. | `bool` | `false` | no |
+| elasticsearch\_availability\_zone\_count | n/a | `number` | `3` | no |
+| elasticsearch\_encrypt\_at\_rest | n/a | `bool` | `true` | no |
+| elasticsearch\_instance\_count | n/a | `number` | `3` | no |
+| elasticsearch\_instance\_type | n/a | `string` | `"r5.large.elasticsearch"` | no |
+| elasticsearch\_name | n/a | `string` | n/a | yes |
+| elasticsearch\_node\_to\_node\_encryption | n/a | `bool` | `true` | no |
+| elasticsearch\_version | n/a | `string` | `"7.4"` | no |
 | elasticsearch\_volume\_size | n/a | `number` | `10` | no |
 | elasticsearch\_volume\_type | n/a | `string` | `"gp2"` | no |
+| elasticsearch\_zone\_awareness\_enabled | n/a | `bool` | `true` | no |
 | firehose\_lambda\_processor\_name | n/a | `string` | `"firehose_lambda_processor"` | no |
 | kinesis\_firehose\_index\_name | n/a | `string` | `"kinesis"` | no |
 | kinesis\_stream\_bucket\_name | n/a | `string` | n/a | yes |
