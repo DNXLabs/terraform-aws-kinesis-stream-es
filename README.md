@@ -53,23 +53,24 @@ data delivery to Amazon ES.
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.20 |
-| archive | ~> 1.3 |
-| aws | ~> 2.69 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| archive | ~> 1.3 |
-| aws | ~> 2.69 |
+| archive | n/a |
+| aws | n/a |
+| null | n/a |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_region | The AWS region to deploy into (e.g. ap-southeast-2). | `string` | `"ap-southeast-2"` | no |
 | create\_elasticsearch | If true, will create aws elasticsearch domain. | `bool` | `false` | no |
-| elasticsearch\_availability\_zone\_count | n/a | `number` | `3` | no |
+| elasticsearch\_availability\_zone\_count | n/a | `number` | `2` | no |
+| elasticsearch\_dedicated\_master\_count | n/a | `number` | `3` | no |
+| elasticsearch\_dedicated\_master\_enabled | n/a | `bool` | `false` | no |
+| elasticsearch\_dedicated\_master\_type | n/a | `string` | `"m4.large.elasticsearch"` | no |
 | elasticsearch\_encrypt\_at\_rest | n/a | `bool` | `true` | no |
 | elasticsearch\_instance\_count | n/a | `number` | `3` | no |
 | elasticsearch\_instance\_type | n/a | `string` | `"r5.large.elasticsearch"` | no |
@@ -78,8 +79,10 @@ data delivery to Amazon ES.
 | elasticsearch\_version | n/a | `string` | `"7.4"` | no |
 | elasticsearch\_volume\_size | n/a | `number` | `10` | no |
 | elasticsearch\_volume\_type | n/a | `string` | `"gp2"` | no |
-| elasticsearch\_zone\_awareness\_enabled | n/a | `bool` | `true` | no |
+| elasticsearch\_zone\_awareness\_enabled | n/a | `bool` | `false` | no |
 | firehose\_lambda\_processor\_name | n/a | `string` | `"firehose_lambda_processor"` | no |
+| kinesis\_firehose\_arn | n/a | `string` | n/a | yes |
+| kinesis\_firehose\_enabled | n/a | `bool` | `false` | no |
 | kinesis\_firehose\_index\_name | n/a | `string` | `"kinesis"` | no |
 | kinesis\_stream\_bucket\_name | n/a | `string` | n/a | yes |
 | private\_subnet\_ids | n/a | `list` | n/a | yes |
