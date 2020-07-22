@@ -55,16 +55,66 @@
 #   }
 # }
 
-# resource "aws_cloudwatch_log_group" "kinesis_delivery" {
-#   name = "/aws/kinesisfirehose/kinesis-firehose-es-stream"
+# resource "aws_cloudformation_stack" "firehose_stream" {
+#   name = var.firehose_delivery_stream_name
+
+#   template_body = <<STACK
+# {
+#   "ElasticSearchDeliveryStream": {
+#     "Type": "AWS::KinesisFirehose::DeliveryStream",
+#     "Properties": {
+#       "ElasticsearchDestinationConfiguration": {
+#         "BufferingHints": {
+#           "IntervalInSeconds": 60,
+#           "SizeInMBs": 60
+#         },
+#         "CloudWatchLoggingOptions": {
+#           "Enabled": true,
+#           "LogGroupName": ${aws_cloudwatch_log_group.kinesis_delivery.name},
+#           "LogStreamName": ${aws_cloudwatch_log_stream.s3_delivery.name}
+#         },
+#         "DomainARN": { "Ref" : ${aws_elasticsearch_domain.es[0].arn} },
+#         "IndexName": { "Ref" : ${var.firehose_delivery_stream_name} },
+#         "IndexRotationPeriod": "NoRotation",
+#         "TypeName" : "fromFirehose",
+#         "RetryOptions": {
+#           "DurationInSeconds": "60"
+#         },
+#         "RoleARN": ${aws_iam_role.firehose_role.arn},
+#         "S3BackupMode": "Disabled",
+#         "S3Configuration": {
+#           "BucketARN": ${aws_s3_bucket.bucket.arn},
+#           "BufferingHints": {
+#               "IntervalInSeconds": "400",
+#               "SizeInMBs": "10"
+#           },
+#           "CompressionFormat": "GZIP",
+#           "RoleARN": ${aws_iam_role.firehose_role.arn},
+#           "CloudWatchLoggingOptions": {
+#               "Enabled": true,
+#               "LogGroupName": ${aws_cloudwatch_log_group.kinesis_delivery.name},
+#               "LogStreamName": ${aws_cloudwatch_log_stream.s3_delivery.name}
+#           }
+#         },
+#         "SecurityGroupIds" : [${aws_security_group.es_sec_grp.id}],
+#         "SubnetIds" : ${var.private_subnet_ids}
+#       }
+#     }
+#   }
+# }
+# STACK
 # }
 
-# resource "aws_cloudwatch_log_stream" "elasticsearch_delivery" {
-#   name           = "ElasticsearchDelivery"
-#   log_group_name = aws_cloudwatch_log_group.kinesis_delivery.name
-# }
+resource "aws_cloudwatch_log_group" "kinesis_delivery" {
+  name = "/aws/kinesisfirehose/kinesis-firehose-es-stream"
+}
 
-# resource "aws_cloudwatch_log_stream" "s3_delivery" {
-#   name           = "S3Delivery"
-#   log_group_name = aws_cloudwatch_log_group.kinesis_delivery.name
-# }
+resource "aws_cloudwatch_log_stream" "elasticsearch_delivery" {
+  name           = "ElasticsearchDelivery"
+  log_group_name = aws_cloudwatch_log_group.kinesis_delivery.name
+}
+
+resource "aws_cloudwatch_log_stream" "s3_delivery" {
+  name           = "S3Delivery"
+  log_group_name = aws_cloudwatch_log_group.kinesis_delivery.name
+}

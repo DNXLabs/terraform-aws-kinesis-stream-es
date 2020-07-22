@@ -1,6 +1,10 @@
-variable "aws_region" {
-  description = "The AWS region to deploy into (e.g. ap-southeast-2)."
-  default     = "ap-southeast-2"
+variable "kinesis_firehose_enabled" {
+  default = false
+  type    = bool
+}
+
+variable "kinesis_firehose_arn" {
+  type = string
 }
 
 variable "create_elasticsearch" {
@@ -24,16 +28,31 @@ variable "elasticsearch_version" {
 }
 
 variable "elasticsearch_zone_awareness_enabled" {
-  default = true
+  default = false
   type    = bool
 }
 
-variable "elasticsearch_instance_count" {
+variable "elasticsearch_dedicated_master_enabled" {
+  default = false
+  type    = bool
+}
+
+variable "elasticsearch_dedicated_master_count" {
   default = 3
   type    = number
 }
 
+variable "elasticsearch_dedicated_master_type" {
+  default = "m4.large.elasticsearch"
+  type    = string
+}
+
 variable "elasticsearch_availability_zone_count" {
+  default = 2
+  type    = number
+}
+
+variable "elasticsearch_instance_count" {
   default = 3
   type    = number
 }

@@ -4,6 +4,13 @@ resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
 }
 
+resource "null_resource" "azs" {
+  count = var.elasticsearch_availability_zone_count > 1 ? 1 : 0
+  triggers = {
+    availability_zone_count = var.elasticsearch_availability_zone_count
+  }
+}
+
 resource "aws_elasticsearch_domain" "es" {
   count = var.create_elasticsearch ? 1 : 0
 
@@ -11,18 +18,24 @@ resource "aws_elasticsearch_domain" "es" {
   elasticsearch_version = var.elasticsearch_version
 
   cluster_config {
-    instance_type          = var.elasticsearch_instance_type
-    instance_count         = var.elasticsearch_instance_count
-    zone_awareness_enabled = true
+    instance_type            = var.elasticsearch_instance_type
+    instance_count           = var.elasticsearch_instance_count
+    zone_awareness_enabled   = var.elasticsearch_zone_awareness_enabled
+    dedicated_master_enabled = var.elasticsearch_dedicated_master_enabled
+    dedicated_master_count   = var.elasticsearch_dedicated_master_count
+    dedicated_master_type    = var.elasticsearch_dedicated_master_type
 
-    zone_awareness_config {
-      availability_zone_count = var.elasticsearch_availability_zone_count
+    dynamic "zone_awareness_config" {
+      for_each = null_resource.azs[*].triggers
+      content {
+        availability_zone_count = zone_awareness_config.value.availability_zone_count
+      }
     }
   }
 
   ebs_options {
     ebs_enabled = true
-    volume_size = 10
+    volume_size = var.elasticsearch_volume_size
   }
 
   encrypt_at_rest {
