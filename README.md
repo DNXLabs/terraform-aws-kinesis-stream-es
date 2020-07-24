@@ -66,7 +66,7 @@ data delivery to Amazon ES.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| create\_elasticsearch | If true, will create aws elasticsearch domain. | `bool` | `false` | no |
+| create\_elasticsearch | If true, will create aws elasticsearch domain. | `bool` | `true` | no |
 | elasticsearch\_availability\_zone\_count | n/a | `number` | `2` | no |
 | elasticsearch\_dedicated\_master\_count | n/a | `number` | `3` | no |
 | elasticsearch\_dedicated\_master\_enabled | n/a | `bool` | `false` | no |
@@ -81,16 +81,18 @@ data delivery to Amazon ES.
 | elasticsearch\_volume\_type | n/a | `string` | `"gp2"` | no |
 | elasticsearch\_zone\_awareness\_enabled | n/a | `bool` | `false` | no |
 | firehose\_lambda\_processor\_name | n/a | `string` | `"firehose_lambda_processor"` | no |
-| kinesis\_firehose\_arn | n/a | `string` | n/a | yes |
-| kinesis\_firehose\_enabled | n/a | `bool` | `false` | no |
+| kinesis\_firehose\_enabled | n/a | `bool` | `true` | no |
 | kinesis\_firehose\_index\_name | n/a | `string` | `"kinesis"` | no |
+| kinesis\_firehose\_name | n/a | `string` | `"kinesis-firehose-es-stream"` | no |
 | kinesis\_stream\_bucket\_name | n/a | `string` | n/a | yes |
 | private\_subnet\_ids | n/a | `list` | n/a | yes |
 | vpc\_id | n/a | `string` | n/a | yes |
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| kinesis\_arn | n/a |
 
 <!--- END_TF_DOCS --->
 
