@@ -1,15 +1,16 @@
 variable "kinesis_firehose_enabled" {
-  default = false
+  default = true
   type    = bool
 }
 
-variable "kinesis_firehose_arn" {
-  type = string
+variable "kinesis_firehose_name" {
+  default = "kinesis-firehose-es-stream"
+  type    = string
 }
 
 variable "create_elasticsearch" {
   description = "If true, will create aws elasticsearch domain."
-  default     = false
+  default     = true
   type        = bool
 }
 

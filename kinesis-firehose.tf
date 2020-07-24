@@ -1,109 +1,140 @@
-# resource "aws_kinesis_firehose_delivery_stream" "firehose_stream" {
-#   name        = "kinesis-firehose-es-stream"
-#   destination = "elasticsearch"
+resource "aws_cloudformation_stack" "firehose_stream" {
+  name = var.kinesis_firehose_name
 
-#   depends_on = [
-#     aws_iam_role.firehose_role,
-#     aws_elasticsearch_domain.es,
-#   ]
+  parameters = {
+    DeliveryStreamName = var.kinesis_firehose_name
+    DeliveryStreamType = "DirectPut"
+    LogGroupName       = aws_cloudwatch_log_group.kinesis_delivery.name
+    LogStreamName      = aws_cloudwatch_log_stream.s3_delivery.name
+    DomainARN          = aws_elasticsearch_domain.es[0].arn
+    LambdaArn          = aws_lambda_function.lambda_processor.arn
+    RoleARN            = aws_iam_role.firehose_role[0].arn
+    BucketARN          = aws_s3_bucket.bucket.arn
+    IndexName          = var.kinesis_firehose_index_name
+    SecurityGroupIds   = aws_security_group.es_sec_grp.id
+    SubnetIds          = var.private_subnet_ids[0]
+  }
 
-#   s3_configuration {
-#     role_arn           = aws_iam_role.firehose_role.arn
-#     bucket_arn         = aws_s3_bucket.bucket.arn
-#     buffer_size        = 10
-#     buffer_interval    = 400
-#     compression_format = "GZIP"
-
-#     cloudwatch_logging_options {
-#       enabled         = true
-#       log_group_name  = aws_cloudwatch_log_group.kinesis_delivery.name
-#       log_stream_name = aws_cloudwatch_log_stream.s3_delivery.name
-#     }
-#   }
-
-#   elasticsearch_configuration {
-#     domain_arn         = aws_elasticsearch_domain.es[0].arn
-#     role_arn           = aws_iam_role.firehose_role.arn
-#     index_name         = var.kinesis_firehose_index_name
-#     buffering_interval = 60
-#     retry_duration     = 60
-
-#     vpc_config {
-#       role_arn           = aws_iam_role.firehose_role.arn
-#       security_group_ids = [aws_security_group.es_sec_grp.id]
-#       subnet_ids         = var.private_subnet_ids
-#     }
-
-#     cloudwatch_logging_options {
-#       enabled         = true
-#       log_group_name  = aws_cloudwatch_log_group.kinesis_delivery.name
-#       log_stream_name = aws_cloudwatch_log_stream.elasticsearch_delivery.name
-#     }
-
-#     processing_configuration {
-#       enabled = "true"
-
-#       processors {
-#         type = "Lambda"
-
-#         parameters {
-#           parameter_name  = "LambdaArn"
-#           parameter_value = "${aws_lambda_function.lambda_processor.arn}:$LATEST"
-#         }
-#       }
-#     }
-#   }
-# }
-
-# resource "aws_cloudformation_stack" "firehose_stream" {
-#   name = var.firehose_delivery_stream_name
-
-#   template_body = <<STACK
-# {
-#   "ElasticSearchDeliveryStream": {
-#     "Type": "AWS::KinesisFirehose::DeliveryStream",
-#     "Properties": {
-#       "ElasticsearchDestinationConfiguration": {
-#         "BufferingHints": {
-#           "IntervalInSeconds": 60,
-#           "SizeInMBs": 60
-#         },
-#         "CloudWatchLoggingOptions": {
-#           "Enabled": true,
-#           "LogGroupName": ${aws_cloudwatch_log_group.kinesis_delivery.name},
-#           "LogStreamName": ${aws_cloudwatch_log_stream.s3_delivery.name}
-#         },
-#         "DomainARN": { "Ref" : ${aws_elasticsearch_domain.es[0].arn} },
-#         "IndexName": { "Ref" : ${var.firehose_delivery_stream_name} },
-#         "IndexRotationPeriod": "NoRotation",
-#         "TypeName" : "fromFirehose",
-#         "RetryOptions": {
-#           "DurationInSeconds": "60"
-#         },
-#         "RoleARN": ${aws_iam_role.firehose_role.arn},
-#         "S3BackupMode": "Disabled",
-#         "S3Configuration": {
-#           "BucketARN": ${aws_s3_bucket.bucket.arn},
-#           "BufferingHints": {
-#               "IntervalInSeconds": "400",
-#               "SizeInMBs": "10"
-#           },
-#           "CompressionFormat": "GZIP",
-#           "RoleARN": ${aws_iam_role.firehose_role.arn},
-#           "CloudWatchLoggingOptions": {
-#               "Enabled": true,
-#               "LogGroupName": ${aws_cloudwatch_log_group.kinesis_delivery.name},
-#               "LogStreamName": ${aws_cloudwatch_log_stream.s3_delivery.name}
-#           }
-#         },
-#         "SecurityGroupIds" : [${aws_security_group.es_sec_grp.id}],
-#         "SubnetIds" : ${var.private_subnet_ids}
-#       }
-#     }
-#   }
-# }
-# STACK
-# }
+  template_body = <<STACK
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for Kinesis Firehose Stream",
+  "Parameters": {
+    "DeliveryStreamName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "DeliveryStreamType": {
+      "Type": "String",
+      "Default": "DirectPut"
+    },
+    "LogGroupName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "LogStreamName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "DomainARN": {
+      "Type": "String",
+      "Default": ""
+    },
+    "IndexName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "LambdaArn": {
+      "Type": "String",
+      "Default": ""
+    },
+    "RoleARN": {
+      "Type": "String",
+      "Default": ""
+    },
+    "BucketARN": {
+      "Type": "String",
+      "Default": ""
+    },
+    "SecurityGroupIds": {
+      "Type": "List<String>",
+      "Default": ""
+    },
+    "SubnetIds": {
+      "Type": "List<String>",
+      "Default": ""
+    }
+  },
+  "Resources": {
+    "KinesisFirehoseDeliveryStream": {
+      "Type": "AWS::KinesisFirehose::DeliveryStream",
+      "Properties": {
+        "DeliveryStreamName": { "Ref" : "DeliveryStreamName" },
+        "DeliveryStreamType": { "Ref" : "DeliveryStreamType" },
+        "ElasticsearchDestinationConfiguration": {
+          "BufferingHints": {
+            "IntervalInSeconds": 300,
+            "SizeInMBs": 5
+          },
+          "CloudWatchLoggingOptions": {
+            "Enabled": true,
+            "LogGroupName": { "Ref" : "LogGroupName" },
+            "LogStreamName": { "Ref" : "LogStreamName" }
+          },
+          "DomainARN": { "Ref" : "DomainARN" },
+          "IndexName": { "Ref" : "IndexName" },
+          "IndexRotationPeriod": "NoRotation",
+          "ProcessingConfiguration": {
+            "Enabled" : true,
+            "Processors" : [
+              {
+                "Parameters": [
+                  {
+                    "ParameterName" : "LambdaArn",
+                    "ParameterValue" : { "Ref" : "LambdaArn" }
+                  }
+                ],
+                "Type" : "Lambda"
+              }
+            ]
+          },
+          "RetryOptions": {
+            "DurationInSeconds": 300
+          },
+          "RoleARN": { "Ref" : "RoleARN" },
+          "S3BackupMode": "FailedDocumentsOnly",
+          "S3Configuration": {
+            "BucketARN": { "Ref" : "BucketARN" },
+            "BufferingHints": {
+              "IntervalInSeconds": 300,
+              "SizeInMBs": 5
+            },
+            "CompressionFormat": "GZIP",
+            "RoleARN": { "Ref" : "RoleARN" },
+            "CloudWatchLoggingOptions": {
+              "Enabled": true,
+              "LogGroupName": { "Ref" : "LogGroupName" },
+              "LogStreamName": { "Ref" : "LogStreamName" }
+            }
+          },
+          "VpcConfiguration": {
+            "RoleARN": { "Ref" : "RoleARN" },
+            "SecurityGroupIds" : { "Ref" : "SecurityGroupIds" },
+            "SubnetIds" : { "Ref" : "SubnetIds" }
+          }
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Arn": {
+      "Description": "Kinesis Arn",
+      "Value": { "Fn::GetAtt": [ "KinesisFirehoseDeliveryStream", "Arn" ] }
+    }
+  }
+}
+STACK
+}
 
 resource "aws_cloudwatch_log_group" "kinesis_delivery" {
   name = "/aws/kinesisfirehose/kinesis-firehose-es-stream"
