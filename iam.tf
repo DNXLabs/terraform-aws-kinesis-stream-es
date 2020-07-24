@@ -105,7 +105,7 @@ resource "aws_iam_role_policy" "firehose_role" {
           "kinesis:ListShards"
         ],
         # "Resource": [aws_kinesis_firehose_delivery_stream.firehose_stream.arn]
-        "Resource": ["arn:aws:firehose:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:deliverystream/${var.kinesis_firehose_name}"]
+        "Resource" : ["arn:aws:firehose:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:deliverystream/${var.kinesis_firehose_name}"]
       },
       {
         "Effect" : "Allow",
@@ -119,5 +119,4 @@ resource "aws_iam_role_policy" "firehose_role" {
       }
     ]
   })
-
 }
