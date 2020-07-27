@@ -21,7 +21,7 @@ resource "aws_iam_role" "firehose_role" {
 resource "aws_iam_role_policy" "firehose_role" {
   count = var.create_elasticsearch ? 1 : 0
 
-  role = aws_iam_role.firehose_role[count.index].name
+  role = aws_iam_role.firehose_role[0].name
 
   policy = jsonencode({
     "Version" : "2012-10-17",

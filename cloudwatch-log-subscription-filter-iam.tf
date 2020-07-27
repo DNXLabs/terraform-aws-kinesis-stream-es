@@ -20,7 +20,7 @@ resource "aws_iam_role" "cloudwatch_logs" {
 resource "aws_iam_role_policy" "cloudwatch_logs" {
   count = var.kinesis_firehose_enabled ? 1 : 0
 
-  role = aws_iam_role.cloudwatch_logs[count.index].name
+  role = aws_iam_role.cloudwatch_logs[0].name
 
   policy = jsonencode({
     "Statement" : [
