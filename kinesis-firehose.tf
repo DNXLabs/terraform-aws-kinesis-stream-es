@@ -11,7 +11,7 @@ resource "aws_cloudformation_stack" "firehose_stream" {
     RoleARN            = aws_iam_role.firehose_role[0].arn
     BucketARN          = aws_s3_bucket.bucket.arn
     IndexName          = var.kinesis_firehose_index_name
-    SecurityGroupIds   = aws_security_group.es_sec_grp.id
+    SecurityGroupIds   = aws_security_group.kdf_sec_grp.id
     SubnetIds          = var.private_subnet_ids[0]
   }
 
@@ -73,7 +73,7 @@ resource "aws_cloudformation_stack" "firehose_stream" {
         "DeliveryStreamType": { "Ref" : "DeliveryStreamType" },
         "ElasticsearchDestinationConfiguration": {
           "BufferingHints": {
-            "IntervalInSeconds": 300,
+            "IntervalInSeconds": 60,
             "SizeInMBs": 5
           },
           "CloudWatchLoggingOptions": {
@@ -99,14 +99,14 @@ resource "aws_cloudformation_stack" "firehose_stream" {
             ]
           },
           "RetryOptions": {
-            "DurationInSeconds": 300
+            "DurationInSeconds": 60
           },
           "RoleARN": { "Ref" : "RoleARN" },
           "S3BackupMode": "FailedDocumentsOnly",
           "S3Configuration": {
             "BucketARN": { "Ref" : "BucketARN" },
             "BufferingHints": {
-              "IntervalInSeconds": 300,
+              "IntervalInSeconds": 60,
               "SizeInMBs": 5
             },
             "CompressionFormat": "GZIP",
