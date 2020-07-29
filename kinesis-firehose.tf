@@ -2,17 +2,18 @@ resource "aws_cloudformation_stack" "firehose_stream" {
   name = var.kinesis_firehose_name
 
   parameters = {
-    DeliveryStreamName = var.kinesis_firehose_name
-    DeliveryStreamType = "DirectPut"
-    LogGroupName       = aws_cloudwatch_log_group.kinesis_delivery.name
-    LogStreamName      = aws_cloudwatch_log_stream.s3_delivery.name
-    DomainARN          = aws_elasticsearch_domain.es[0].arn
-    LambdaArn          = aws_lambda_function.lambda_processor.arn
-    RoleARN            = aws_iam_role.firehose_role[0].arn
-    BucketARN          = aws_s3_bucket.bucket.arn
-    IndexName          = var.kinesis_firehose_index_name
-    SecurityGroupIds   = aws_security_group.kdf_sec_grp.id
-    SubnetIds          = var.private_subnet_ids[0]
+    DeliveryStreamName  = var.kinesis_firehose_name
+    DeliveryStreamType  = "DirectPut"
+    IndexRotationPeriod = var.kinesis_firehose_index_rotation_period
+    LogGroupName        = aws_cloudwatch_log_group.kinesis_delivery.name
+    LogStreamName       = aws_cloudwatch_log_stream.s3_delivery.name
+    DomainARN           = aws_elasticsearch_domain.es[0].arn
+    LambdaArn           = aws_lambda_function.lambda_processor.arn
+    RoleARN             = aws_iam_role.firehose_role[0].arn
+    BucketARN           = aws_s3_bucket.bucket.arn
+    IndexName           = var.kinesis_firehose_index_name
+    SecurityGroupIds    = aws_security_group.kdf_sec_grp.id
+    SubnetIds           = var.private_subnet_ids[0]
   }
 
   template_body = <<STACK
@@ -83,7 +84,7 @@ resource "aws_cloudformation_stack" "firehose_stream" {
           },
           "DomainARN": { "Ref" : "DomainARN" },
           "IndexName": { "Ref" : "IndexName" },
-          "IndexRotationPeriod": "NoRotation",
+          "IndexRotationPeriod": { "Ref" : "IndexRotationPeriod" },
           "ProcessingConfiguration": {
             "Enabled" : true,
             "Processors" : [

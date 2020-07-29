@@ -91,6 +91,12 @@ variable "kinesis_firehose_index_name" {
   default = "kinesis"
 }
 
+variable "kinesis_firehose_index_rotation_period" {
+  default     = "NoRotation"
+  type        = string
+  description = "Allowed values: NoRotation | OneDay | OneHour | OneMonth | OneWeek"
+}
+
 variable "kinesis_stream_bucket_name" {
   type = string
 }
