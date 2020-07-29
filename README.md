@@ -83,8 +83,9 @@ data delivery to Amazon ES.
 | firehose\_lambda\_processor\_name | n/a | `string` | `"firehose_lambda_processor"` | no |
 | kinesis\_firehose\_enabled | n/a | `bool` | `true` | no |
 | kinesis\_firehose\_index\_name | n/a | `string` | `"kinesis"` | no |
+| kinesis\_firehose\_index\_rotation\_period | Allowed values: NoRotation \| OneDay \| OneHour \| OneMonth \| OneWeek | `string` | `"NoRotation"` | no |
 | kinesis\_firehose\_name | n/a | `string` | `"kinesis-firehose-es-stream"` | no |
-| kinesis\_stream\_bucket\_name | n/a | `string` | n/a | yes |
+| kinesis\_stream\_bucket\_name | n/a | `string` | `"kinesis-logs-stream-backup-bucket"` | no |
 | private\_subnet\_ids | n/a | `list` | n/a | yes |
 | vpc\_id | n/a | `string` | n/a | yes |
 
