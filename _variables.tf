@@ -89,6 +89,7 @@ variable "firehose_lambda_processor_name" {
 
 variable "kinesis_firehose_index_name" {
   default = "kinesis"
+  type    = string
 }
 
 variable "kinesis_firehose_index_rotation_period" {
