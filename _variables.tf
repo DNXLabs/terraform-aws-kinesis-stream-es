@@ -99,7 +99,8 @@ variable "kinesis_firehose_index_rotation_period" {
 }
 
 variable "kinesis_stream_bucket_name" {
-  type = string
+  default = "kinesis-logs-stream-backup-bucket"
+  type    = string
 }
 
 variable "vpc_id" {
