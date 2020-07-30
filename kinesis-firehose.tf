@@ -29,6 +29,10 @@ resource "aws_cloudformation_stack" "firehose_stream" {
       "Type": "String",
       "Default": "DirectPut"
     },
+    "IndexRotationPeriod": {
+      "Type": "String",
+      "Default": "NoRotation"
+    },
     "LogGroupName": {
       "Type": "String",
       "Default": ""
