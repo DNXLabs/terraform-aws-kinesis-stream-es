@@ -89,7 +89,6 @@ variable "elasticsearch_volume_size" {
   type        = number
 }
 
-
 variable "firehose_lambda_processor_name" {
   default = "firehose_lambda_processor"
   type    = string
