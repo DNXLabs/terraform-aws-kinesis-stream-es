@@ -93,7 +93,7 @@ data delivery to Amazon ES.
 
 | Name | Description |
 |------|-------------|
-| kinesis\_arn | n/a |
+| kinesis\_arn | The ARN of the kinesis firehose stream to be used in the cloudwatch log subscription filter. |
 
 <!--- END_TF_DOCS --->
 
