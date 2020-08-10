@@ -66,26 +66,26 @@ data delivery to Amazon ES.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| elasticsearch\_availability\_zone\_count | n/a | `number` | `2` | no |
-| elasticsearch\_dedicated\_master\_count | n/a | `number` | `3` | no |
-| elasticsearch\_dedicated\_master\_enabled | n/a | `bool` | `false` | no |
-| elasticsearch\_dedicated\_master\_type | n/a | `string` | `"m4.large.elasticsearch"` | no |
+| elasticsearch\_availability\_zone\_count | (Optional) Number of Availability Zones for the domain to use with zone\_awareness\_enabled. Valid values: 2 or 3. | `number` | `2` | no |
+| elasticsearch\_dedicated\_master\_count | (Optional) Number of dedicated master nodes in the cluster. | `number` | `3` | no |
+| elasticsearch\_dedicated\_master\_enabled | (Optional) Indicates whether dedicated master nodes are enabled for the cluster. | `bool` | `false` | no |
+| elasticsearch\_dedicated\_master\_type | (Optional) Instance type of the dedicated master nodes in the cluster. | `string` | `"m4.large.elasticsearch"` | no |
 | elasticsearch\_enabled | If true, will create aws elasticsearch domain. | `bool` | `true` | no |
-| elasticsearch\_encrypt\_at\_rest | n/a | `bool` | `true` | no |
-| elasticsearch\_instance\_count | n/a | `number` | `3` | no |
-| elasticsearch\_instance\_type | n/a | `string` | `"r5.large.elasticsearch"` | no |
-| elasticsearch\_name | n/a | `string` | n/a | yes |
-| elasticsearch\_node\_to\_node\_encryption | n/a | `bool` | `true` | no |
-| elasticsearch\_version | n/a | `string` | `"7.4"` | no |
-| elasticsearch\_volume\_size | n/a | `number` | `10` | no |
-| elasticsearch\_volume\_type | n/a | `string` | `"gp2"` | no |
-| elasticsearch\_zone\_awareness\_enabled | n/a | `bool` | `false` | no |
+| elasticsearch\_encrypt\_at\_rest | (Optional) Encrypt at rest options. Only available for certain instance types. | `bool` | `true` | no |
+| elasticsearch\_instance\_count | (Optional) Number of instances in the cluster. | `number` | `3` | no |
+| elasticsearch\_instance\_type | (Optional) Instance type of data nodes in the cluster. | `string` | `"r5.large.elasticsearch"` | no |
+| elasticsearch\_name | The name of the Elasticsearch domain. | `string` | n/a | yes |
+| elasticsearch\_node\_to\_node\_encryption | (Optional) Node-to-node encryption options. | `bool` | `true` | no |
+| elasticsearch\_version | (Optional) The version of Elasticsearch to deploy. Defaults to 7.4 | `string` | `"7.4"` | no |
+| elasticsearch\_volume\_size | The size of EBS volumes attached to data nodes (in GB). Required if ebs\_enabled is set to true. | `number` | `10` | no |
+| elasticsearch\_volume\_type | (Optional) The type of EBS volumes attached to data nodes. | `string` | `"gp2"` | no |
+| elasticsearch\_zone\_awareness\_enabled | (Optional) Indicates whether zone awareness is enabled, set to true for multi-az deployment. To enable awareness with three Availability Zones, the availability\_zone\_count within the zone\_awareness\_config must be set to 3. | `bool` | `false` | no |
 | firehose\_lambda\_processor\_name | n/a | `string` | `"firehose_lambda_processor"` | no |
-| kinesis\_firehose\_enabled | n/a | `bool` | `true` | no |
-| kinesis\_firehose\_index\_name | n/a | `string` | `"kinesis"` | no |
-| kinesis\_firehose\_index\_rotation\_period | Allowed values: NoRotation \| OneDay \| OneHour \| OneMonth \| OneWeek | `string` | `"NoRotation"` | no |
-| kinesis\_firehose\_name | n/a | `string` | `"kinesis-firehose-es-stream"` | no |
-| kinesis\_stream\_bucket\_name | n/a | `string` | `"kinesis-logs-stream-backup-bucket"` | no |
+| kinesis\_firehose\_enabled | If true, will create the AWS kinesis firehose. | `bool` | `true` | no |
+| kinesis\_firehose\_index\_name | (Required) The Elasticsearch index name. | `string` | `"kinesis"` | no |
+| kinesis\_firehose\_index\_rotation\_period | (Optional) The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data. Valid values are NoRotation, OneHour, OneDay, OneWeek, and OneMonth. The default value is OneDay. | `string` | `"OneDay"` | no |
+| kinesis\_firehose\_name | (Required) A name to identify the stream. This is unique to the AWS account and region the Stream is created in. | `string` | `"kinesis-firehose-es-stream"` | no |
+| kinesis\_stream\_bucket\_name | The name of the S3 bucket to store failed documents. | `string` | `"kinesis-logs-stream-backup-bucket"` | no |
 | private\_subnet\_ids | n/a | `list` | n/a | yes |
 | vpc\_id | n/a | `string` | n/a | yes |
 
