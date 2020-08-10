@@ -10,7 +10,7 @@ module "kinesis_stream_es" {
 
     vpc_id                      = ""
     private_subnet_ids          = ""
-    create_elasticsearch        = ""
+    elasticsearch_enabled       = ""
     elasticsearch_domain_name   = ""
     elasticsearch_volume_type   = ""
     elasticsearch_volume_size   = ""
