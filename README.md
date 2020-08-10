@@ -66,11 +66,11 @@ data delivery to Amazon ES.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| create\_elasticsearch | If true, will create aws elasticsearch domain. | `bool` | `true` | no |
 | elasticsearch\_availability\_zone\_count | n/a | `number` | `2` | no |
 | elasticsearch\_dedicated\_master\_count | n/a | `number` | `3` | no |
 | elasticsearch\_dedicated\_master\_enabled | n/a | `bool` | `false` | no |
 | elasticsearch\_dedicated\_master\_type | n/a | `string` | `"m4.large.elasticsearch"` | no |
+| elasticsearch\_enabled | If true, will create aws elasticsearch domain. | `bool` | `true` | no |
 | elasticsearch\_encrypt\_at\_rest | n/a | `bool` | `true` | no |
 | elasticsearch\_instance\_count | n/a | `number` | `3` | no |
 | elasticsearch\_instance\_type | n/a | `string` | `"r5.large.elasticsearch"` | no |
