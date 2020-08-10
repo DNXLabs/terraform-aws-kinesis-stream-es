@@ -1,5 +1,5 @@
 resource "aws_iam_service_linked_role" "es" {
-  count = var.create_elasticsearch ? 1 : 0
+  count = var.elasticsearch_enabled ? 1 : 0
 
   aws_service_name = "es.amazonaws.com"
 }
@@ -12,7 +12,7 @@ resource "null_resource" "azs" {
 }
 
 resource "aws_elasticsearch_domain" "es" {
-  count = var.create_elasticsearch ? 1 : 0
+  count = var.elasticsearch_enabled ? 1 : 0
 
   domain_name           = var.elasticsearch_name
   elasticsearch_version = var.elasticsearch_version

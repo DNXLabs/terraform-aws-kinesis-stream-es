@@ -1,5 +1,5 @@
 resource "aws_iam_role" "firehose_role" {
-  count = var.create_elasticsearch ? 1 : 0
+  count = var.elasticsearch_enabled ? 1 : 0
 
   name = "firehose_es_stream_role"
 
@@ -19,7 +19,7 @@ resource "aws_iam_role" "firehose_role" {
 }
 
 resource "aws_iam_role_policy" "firehose_role" {
-  count = var.create_elasticsearch ? 1 : 0
+  count = var.elasticsearch_enabled ? 1 : 0
 
   role = aws_iam_role.firehose_role[0].name
 

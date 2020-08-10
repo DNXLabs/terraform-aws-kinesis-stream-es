@@ -8,7 +8,7 @@ variable "kinesis_firehose_name" {
   type    = string
 }
 
-variable "create_elasticsearch" {
+variable "elasticsearch_enabled" {
   description = "If true, will create aws elasticsearch domain."
   default     = true
   type        = bool
