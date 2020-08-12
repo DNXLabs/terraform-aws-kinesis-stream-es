@@ -36,7 +36,7 @@ resource "aws_cloudwatch_log_subscription_filter" "log_subscription_filter" {
   name            = ""
   log_group_name  = ""
   filter_pattern  = ""
-  role_arn        = "" # ttps://docs.aws.amazon.com/firehose/latest/dev/cw-to-delivery-stream.html
+  role_arn        = "" # https://docs.aws.amazon.com/firehose/latest/dev/cw-to-delivery-stream.html
   destination_arn = "" # Kinesis ARN
 }
 ```
