@@ -64,7 +64,7 @@ jobs:
           terraform validate -var "region=${AWS_REGION}" -var "vpc_id=vpc-123456" -var "subnets=[\"subnet-12345a\"]" -var "workers_ami_id=ami-123456" -var "cluster_ingress_cidrs=[]" -var "cluster_name=test_cluster"
 
   tfsec:
-    name: tfsec
+    name: Security check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
