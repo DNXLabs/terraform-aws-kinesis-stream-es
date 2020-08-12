@@ -3,6 +3,8 @@
 [![Lint Status](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/actions)
 [![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-kinesis-stream-es)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/blob/master/LICENSE)
 
+This module can load [streaming data](https://aws.amazon.com/streaming-data/) into your Amazon Elasticsearch Service domain from Amazon Kinesis Data Firehose and Amazon CloudWatch Logs.
+
 ## Usage
 ```terraform
 module "kinesis_stream_es" {
@@ -25,6 +27,19 @@ specified Lambda function asynchronously with each buffered batch using the AWS 
 invocation mode. The transformed data is sent from Lambda to Kinesis Data Firehose. Kinesis Data
 Firehose then sends it to the destination when the specified destination buffering size or buffering
 interval is reached, whichever happens first.
+
+## Streaming Data into Kinesis Data Firehose
+You can load streaming data from CloudWatch Logs to your Kinesis Data Firehose by using a CloudWatch Logs subscription.
+
+```terraform
+resource "aws_cloudwatch_log_subscription_filter" "log_subscription_filter" {
+  name            = ""
+  log_group_name  = ""
+  filter_pattern  = ""
+  role_arn        = "" # ttps://docs.aws.amazon.com/firehose/latest/dev/cw-to-delivery-stream.html
+  destination_arn = "" # Kinesis ARN
+}
+```
 
 #### Important
 > The Lambda synchronous invocation mode has a payload size limit of 6 MB for both the request
