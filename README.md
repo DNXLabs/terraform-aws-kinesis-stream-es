@@ -46,6 +46,9 @@ incoming data before delivering it to Amazon ES. You can configure the values fo
 Buffer size (1–100 MB) or Buffer interval (60–900 seconds), and the condition satisfied first triggers
 data delivery to Amazon ES.
 
+#### Architecture Diagram
+![diagram](./images/diagram.png)
+
 <!--- BEGIN_TF_DOCS --->
 
 ## Requirements
