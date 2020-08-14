@@ -51,7 +51,6 @@ import gzip
 import boto3
 import logging
 import os
-from datetime import datetime
 
 STATUS_OK: str = 'Ok'
 DROPPED: str = 'Dropped'
@@ -73,9 +72,7 @@ def transform(data):
     Returns:
     str: The transformed log event.
     """
-    now = datetime.utcnow().isoformat()
     source = {
-        'timestamp': now,
         'logEvents': data['logEvents'],
         'logStream': data['logStream']
     }
