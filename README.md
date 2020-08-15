@@ -6,7 +6,7 @@
 
 This terraform module can load [streaming data](https://aws.amazon.com/streaming-data/) into your Amazon Elasticsearch Service domain from Amazon Kinesis Data Firehose and Amazon CloudWatch Logs.
 
-You have the option to :
+You have the option to:
 
 - Create or not a elastisearch domain. If true, will create aws elasticsearch domain.
 - Encrypt at rest options. Only available for certain instance types.
