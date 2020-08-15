@@ -4,7 +4,35 @@
 <!-- [![Security Status](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/workflows/Security/badge.svg)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/actions) -->
 [![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-kinesis-stream-es)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/blob/master/LICENSE)
 
-This module can load [streaming data](https://aws.amazon.com/streaming-data/) into your Amazon Elasticsearch Service domain from Amazon Kinesis Data Firehose and Amazon CloudWatch Logs.
+This terraform module can load [streaming data](https://aws.amazon.com/streaming-data/) into your Amazon Elasticsearch Service domain from Amazon Kinesis Data Firehose and Amazon CloudWatch Logs.
+
+You have the option to:
+
+- Create or not a elastisearch domain. If true, will create aws elasticsearch domain.
+- Encrypt at rest options. Only available for certain instance types.
+- Set the Number of instances in the cluster.
+  - The default value is 3
+- Set the Instance type of data nodes in the cluster.
+  - The default value is "r5.large.elasticsearch"
+- Set the Number of Availability Zones for the domain to use with zone_awareness_enabled.
+  - Valid values: 2 or 3.
+- Set  the Number of dedicated master nodes in the cluster.
+  - The default value is 3
+- Indicate whether dedicated master nodes are enabled for the cluster.
+  - The default value is false
+- Set the Instance type of the dedicated master nodes in the cluster.
+  - The default value is "m4.large.elasticsearch"
+- Set Node-to-node encryption options.
+- Set The version of Elasticsearch to deploy.
+  - The Default value is 7.4
+- Set The size of EBS volumes attached to data nodes (in GB). Required if ebs_enabled is set to true.
+- Set The type of EBS volumes attached to data nodes.
+  - The default value is "gp2"
+- Indicates whether zone awareness is enabled, set to true for multi-az deployment. To enable awareness with three Availability Zones, the availability_zone_count within the zone_awareness_config must be set to 3.
+- Enable or not kinesis firehose
+- Set The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data. Valid values are NoRotation, OneHour, OneDay, OneWeek, and OneMonth. The default value is OneDay.
+- Set The name of the S3 bucket to store failed documents.
+
 
 ## Usage
 ```terraform
