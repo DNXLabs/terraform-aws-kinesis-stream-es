@@ -1,5 +1,9 @@
 # terraform-aws-kinesis-stream-es
 
+[![Lint Status](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/actions)
+[![Security Status](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/workflows/Security/badge.svg)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/actions)
+[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-kinesis-stream-es)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/blob/master/LICENSE)
+
 This terraform module can load [streaming data](https://aws.amazon.com/streaming-data/) into your Amazon Elasticsearch Service domain from Amazon Kinesis Data Firehose and Amazon CloudWatch Logs.
 
 You have the option to :
@@ -89,9 +93,6 @@ data delivery to Amazon ES.
 #### Architecture Diagram
 ![diagram](./images/diagram.png)
 
-[![Lint Status](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/actions)
-[![Security Status](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/workflows/Security/badge.svg)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/actions)
-[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-kinesis-stream-es)](https://github.com/DNXLabs/terraform-aws-kinesis-stream-es/blob/master/LICENSE)
 <!--- BEGIN_TF_DOCS --->
 
 ## Requirements
