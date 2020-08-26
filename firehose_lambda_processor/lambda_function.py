@@ -61,7 +61,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(os.getenv('LOG_LEVEL', 'INFO'))
 
 
-def transform(data):
+def transform(data, timestamp):
     """Transform each log event.
 
     The default implementation below just extracts the message and appends a newline to it.
@@ -73,6 +73,11 @@ def transform(data):
     str: The transformed log event.
     """
     source = {
+        '@timestamp': timestamp,
+        'messageType': data['messageType'],
+        'owner': data['owner'],
+        'logGroup': data['logGroup'],
+        'subscriptionFilters': data['subscriptionFilters'],
         'logEvents': data['logEvents'],
         'logStream': data['logStream']
     }
@@ -83,6 +88,7 @@ def transform(data):
 
 def processRecords(records):
     for record in records:
+        timestamp = record['approximateArrivalTimestamp']
         data = json.loads(gzip.decompress(base64.b64decode(record['data'])))
 
         recId = record['recordId']
@@ -96,7 +102,7 @@ def processRecords(records):
                 'recordId': recId
             }
         elif data['messageType'] == 'DATA_MESSAGE':
-            data = transform(data)
+            data = transform(data, timestamp)
             data = base64.b64encode(data.encode('UTF-8')).decode('UTF-8')
             yield {
                 'data': data,
