@@ -132,7 +132,7 @@ data delivery to Amazon ES.
 | kinesis\_firehose\_index\_rotation\_period | (Optional) The Elasticsearch index rotation period. Index rotation appends a timestamp to the IndexName to facilitate expiration of old data. Valid values are NoRotation, OneHour, OneDay, OneWeek, and OneMonth. The default value is OneDay. | `string` | `"OneDay"` | no |
 | kinesis\_firehose\_name | (Required) A name to identify the stream. This is unique to the AWS account and region the Stream is created in. | `string` | `"kinesis-firehose-es-stream"` | no |
 | kinesis\_stream\_bucket\_name | The name of the S3 bucket to store failed documents. | `string` | `"kinesis-logs-stream-backup-bucket"` | no |
-| private\_subnet\_ids | n/a | `list` | n/a | yes |
+| private\_subnet\_ids | n/a | `list(any)` | n/a | yes |
 | vpc\_id | n/a | `string` | n/a | yes |
 
 ## Outputs
