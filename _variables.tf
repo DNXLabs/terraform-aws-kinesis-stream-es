@@ -3,7 +3,7 @@ variable "vpc_id" {
 }
 
 variable "private_subnet_ids" {
-  type = list
+  type = list(any)
 }
 
 variable "elasticsearch_enabled" {
